@@ -95,7 +95,7 @@ fun UserDetailsScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(padding)
-                        .wrapContentSize(Alignment.Center)
+                        //.wrapContentSize(Alignment.Center)
                 )
             }
             error != null -> {
