@@ -8,4 +8,8 @@ class UsersRepository(private val api: UsersApi) {
     suspend fun getUsers(): Result<List<User>> = runCatching {
         api.getUsers()
     }
+
+    suspend fun getUser(id: Int): Result<User> = runCatching {
+        api.getUser(id)
+    }
 }

@@ -42,7 +42,7 @@ import com.hitha.shared.repository.UsersRepository
 import org.koin.compose.koinInject
 
 @Composable
-fun UsersScreen() {
+fun UsersScreen(onUserClick: (Int) -> Unit = {}) {
     val repository: UsersRepository = koinInject()
     var users by remember { mutableStateOf<List<User>>(emptyList()) }
     var loading by remember { mutableStateOf(true) }
@@ -88,7 +88,7 @@ fun UsersScreen() {
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(users) { user ->
-                        UserCard(user)
+                        UserCard(user, onClick = { onUserClick(user.id) })
                     }
                 }
             }
@@ -97,10 +97,11 @@ fun UsersScreen() {
 }
 
 @Composable
-fun UserCard(user: User) {
+fun UserCard(user: User, onClick: () -> Unit = {}) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        onClick = onClick
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {

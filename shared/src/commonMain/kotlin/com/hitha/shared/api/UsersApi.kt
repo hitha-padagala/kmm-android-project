@@ -27,4 +27,8 @@ class UsersApi {
     suspend fun getUsers(): List<User> {
         return client.get("https://jsonplaceholder.typicode.com/users").body()
     }
+
+    suspend fun getUser(id: Int): User {
+        return client.get("https://jsonplaceholder.typicode.com/users/$id").body()
+    }
 }
