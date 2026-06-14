@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.hitha.android.ui.LoginScreen
+import com.hitha.android.ui.SplashScreen
 import com.hitha.android.ui.UserDetailsScreen
 import com.hitha.android.ui.UsersScreen
 
@@ -14,8 +15,18 @@ import com.hitha.android.ui.UsersScreen
 fun AppNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Login.route
+        startDestination = Routes.Splash.route
     ) {
+        composable(Routes.Splash.route) {
+            SplashScreen(
+                onSplashFinished = {
+                    navController.navigate(Routes.Login.route) {
+                        popUpTo(Routes.Splash.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+
         composable(Routes.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
