@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.hitha.android.ui.LoginScreen
 import com.hitha.android.ui.SplashScreen
+import com.hitha.android.ui.UploadScreen
 import com.hitha.android.ui.UserDetailsScreen
 import com.hitha.android.ui.UsersScreen
 
@@ -41,7 +42,16 @@ fun AppNavGraph(navController: NavHostController) {
             UsersScreen(
                 onUserClick = { userId ->
                     navController.navigate(Routes.UserDetails.createRoute(userId))
+                },
+                onUploadClick = {
+                    navController.navigate(Routes.Upload.route)
                 }
+            )
+        }
+
+        composable(Routes.Upload.route) {
+            UploadScreen(
+                onBackClick = { navController.popBackStack() }
             )
         }
 
