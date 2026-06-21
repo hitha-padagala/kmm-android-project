@@ -50,7 +50,8 @@ import org.koin.compose.koinInject
 @Composable
 fun UserDetailsScreen(
     userId: Int,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onOpenDrawer: () -> Unit = {}
 ) {
     val repository: UsersRepository = koinInject()
     var user by remember { mutableStateOf<User?>(null) }

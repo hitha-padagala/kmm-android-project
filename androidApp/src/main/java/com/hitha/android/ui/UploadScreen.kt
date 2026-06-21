@@ -17,11 +17,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,7 +55,7 @@ import java.io.ByteArrayOutputStream
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(onBackClick: () -> Unit) {
+fun UploadScreen(onBackClick: () -> Unit, onOpenDrawer: () -> Unit = {}) {
     val uploadApi: UploadApi = koinInject()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -85,10 +84,10 @@ fun UploadScreen(onBackClick: () -> Unit) {
             TopAppBar(
                 title = { Text("Upload File") },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(onClick = onOpenDrawer) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Open drawer"
                         )
                     }
                 },

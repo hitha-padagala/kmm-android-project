@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.Card
@@ -51,7 +52,8 @@ import org.koin.compose.koinInject
 @Composable
 fun UsersScreen(
     onUserClick: (Int) -> Unit = {},
-    onUploadClick: () -> Unit = {}
+    onUploadClick: () -> Unit = {},
+    onOpenDrawer: () -> Unit = {}
 ) {
     val repository: UsersRepository = koinInject()
     var users by remember { mutableStateOf<List<User>>(emptyList()) }
@@ -75,6 +77,14 @@ fun UsersScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Users") },
+                navigationIcon = {
+                    IconButton(onClick = onOpenDrawer) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Open drawer"
+                        )
+                    }
+                },
                 actions = {
                     IconButton(onClick = onUploadClick) {
                         Icon(
