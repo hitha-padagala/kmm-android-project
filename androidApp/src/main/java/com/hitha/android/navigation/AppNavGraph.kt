@@ -1,13 +1,11 @@
 package com.hitha.android.navigation
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -22,7 +20,11 @@ import com.hitha.android.ui.UsersScreen
 import kotlinx.coroutines.launch
 
 @Composable
-fun AppNavGraph(navController: NavHostController) {
+fun AppNavGraph(
+    navController: NavHostController,
+    isDarkTheme: Boolean = false,
+    onToggleTheme: () -> Unit = {}
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val openDrawer: () -> Unit = remember { { scope.launch { drawerState.open() } } }
@@ -60,7 +62,9 @@ fun AppNavGraph(navController: NavHostController) {
             AppDrawerContent(
                 onNavigateUsers = { closeAndNavigate(Routes.UserList.route) },
                 onNavigateUpload = { closeAndNavigate(Routes.Upload.route) },
-                onLogout = onLogout
+                onLogout = onLogout,
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = onToggleTheme
             )
         }
     ) {
