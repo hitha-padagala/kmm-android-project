@@ -4,6 +4,9 @@ import com.hitha.shared.api.AuthApi
 import com.hitha.shared.api.UploadApi
 import com.hitha.shared.api.UsersApi
 import com.hitha.shared.repository.AuthRepository
+import com.hitha.shared.repository.BookingRepository
+import com.hitha.shared.repository.HotelRepository
+import com.hitha.shared.repository.RestaurantRepository
 import com.hitha.shared.repository.UsersRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -32,4 +35,7 @@ val sharedModule = module {
     single { UsersApi(get()) }
     single { UsersRepository(get()) }
     single { UploadApi(get()) }
+    single { HotelRepository() }
+    single { RestaurantRepository() }
+    single { BookingRepository() }
 }

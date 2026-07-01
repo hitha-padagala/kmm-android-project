@@ -12,7 +12,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.hitha.android.ui.AppDrawerContent
+import com.hitha.android.ui.HotelDetailScreen
+import com.hitha.android.ui.HotelListScreen
 import com.hitha.android.ui.LoginScreen
+import com.hitha.android.ui.MyBookingsScreen
+import com.hitha.android.ui.RestaurantScreen
 import com.hitha.android.ui.SplashScreen
 import com.hitha.android.ui.UploadScreen
 import com.hitha.android.ui.UserDetailsScreen
@@ -51,16 +55,21 @@ fun AppNavGraph(
         }
     }
 
+    val postLoginRoutes = listOf(
+        Routes.UserList.route, Routes.Upload.route, Routes.UserDetails.route,
+        Routes.HotelList.route, Routes.HotelDetail.route,
+        Routes.Restaurant.route, Routes.MyBookings.route
+    )
+
     ModalNavigationDrawer(
         drawerState = drawerState,
-        gesturesEnabled = drawerState.isOpen || navController.currentDestination?.route in listOf(
-            Routes.UserList.route,
-            Routes.Upload.route,
-            Routes.UserDetails.route
-        ),
+        gesturesEnabled = drawerState.isOpen || navController.currentDestination?.route in postLoginRoutes,
         drawerContent = {
             AppDrawerContent(
                 onNavigateUsers = { closeAndNavigate(Routes.UserList.route) },
+                onNavigateHotels = { closeAndNavigate(Routes.HotelList.route) },
+                onNavigateRestaurant = { closeAndNavigate(Routes.Restaurant.route) },
+                onNavigateBookings = { closeAndNavigate(Routes.MyBookings.route) },
                 onNavigateUpload = { closeAndNavigate(Routes.Upload.route) },
                 onLogout = onLogout,
                 isDarkTheme = isDarkTheme,
@@ -94,12 +103,8 @@ fun AppNavGraph(
 
             composable(Routes.UserList.route) {
                 UsersScreen(
-                    onUserClick = { userId ->
-                        navController.navigate(Routes.UserDetails.createRoute(userId))
-                    },
-                    onUploadClick = {
-                        navController.navigate(Routes.Upload.route)
-                    },
+                    onUserClick = { userId -> navController.navigate(Routes.UserDetails.createRoute(userId)) },
+                    onUploadClick = { navController.navigate(Routes.Upload.route) },
                     onOpenDrawer = openDrawer
                 )
             }
@@ -113,9 +118,7 @@ fun AppNavGraph(
 
             composable(
                 route = Routes.UserDetails.route,
-                arguments = listOf(
-                    navArgument("userId") { type = NavType.IntType }
-                )
+                arguments = listOf(navArgument("userId") { type = NavType.IntType })
             ) { backStackEntry ->
                 val userId = backStackEntry.arguments?.getInt("userId") ?: return@composable
                 UserDetailsScreen(
@@ -123,6 +126,32 @@ fun AppNavGraph(
                     onBackClick = { navController.popBackStack() },
                     onOpenDrawer = openDrawer
                 )
+            }
+
+            composable(Routes.HotelList.route) {
+                HotelListScreen(
+                    onHotelClick = { hotelId -> navController.navigate(Routes.HotelDetail.createRoute(hotelId)) },
+                    onOpenDrawer = openDrawer
+                )
+            }
+
+            composable(
+                route = Routes.HotelDetail.route,
+                arguments = listOf(navArgument("hotelId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val hotelId = backStackEntry.arguments?.getInt("hotelId") ?: return@composable
+                HotelDetailScreen(
+                    hotelId = hotelId,
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+
+            composable(Routes.Restaurant.route) {
+                RestaurantScreen(onOpenDrawer = openDrawer)
+            }
+
+            composable(Routes.MyBookings.route) {
+                MyBookingsScreen(onOpenDrawer = openDrawer)
             }
         }
     }

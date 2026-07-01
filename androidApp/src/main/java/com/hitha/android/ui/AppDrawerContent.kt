@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.Fastfood
+import androidx.compose.material.icons.filled.Hotel
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.People
@@ -31,6 +34,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun AppDrawerContent(
     onNavigateUsers: () -> Unit,
+    onNavigateHotels: () -> Unit,
+    onNavigateRestaurant: () -> Unit,
+    onNavigateBookings: () -> Unit,
     onNavigateUpload: () -> Unit,
     onLogout: () -> Unit,
     isDarkTheme: Boolean = false,
@@ -39,14 +45,14 @@ fun AppDrawerContent(
     ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.7f)) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "KMM Users",
+                text = "Hospitality App",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Kotlin Multiplatform Demo",
+                text = "KMM Demo",
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -55,13 +61,33 @@ fun AppDrawerContent(
         HorizontalDivider()
 
         NavigationDrawerItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.People,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            },
+            icon = { Icon(Icons.Default.Hotel, null, Modifier.size(24.dp)) },
+            label = { Text("Hotels") },
+            selected = false,
+            onClick = onNavigateHotels,
+            modifier = Modifier.padding(horizontal = 12.dp)
+        )
+
+        NavigationDrawerItem(
+            icon = { Icon(Icons.Default.Fastfood, null, Modifier.size(24.dp)) },
+            label = { Text("Restaurant") },
+            selected = false,
+            onClick = onNavigateRestaurant,
+            modifier = Modifier.padding(horizontal = 12.dp)
+        )
+
+        NavigationDrawerItem(
+            icon = { Icon(Icons.Default.CalendarMonth, null, Modifier.size(24.dp)) },
+            label = { Text("My Bookings") },
+            selected = false,
+            onClick = onNavigateBookings,
+            modifier = Modifier.padding(horizontal = 12.dp)
+        )
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+
+        NavigationDrawerItem(
+            icon = { Icon(Icons.Default.People, null, Modifier.size(24.dp)) },
             label = { Text("Users") },
             selected = false,
             onClick = onNavigateUsers,
@@ -69,13 +95,7 @@ fun AppDrawerContent(
         )
 
         NavigationDrawerItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.CloudUpload,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            },
+            icon = { Icon(Icons.Default.CloudUpload, null, Modifier.size(24.dp)) },
             label = { Text("Upload") },
             selected = false,
             onClick = onNavigateUpload,
@@ -85,9 +105,7 @@ fun AppDrawerContent(
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 28.dp, vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 28.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -100,22 +118,13 @@ fun AppDrawerContent(
                 text = if (isDarkTheme) "Dark Mode" else "Light Mode",
                 modifier = Modifier.weight(1f)
             )
-            Switch(
-                checked = isDarkTheme,
-                onCheckedChange = { onToggleTheme() }
-            )
+            Switch(checked = isDarkTheme, onCheckedChange = { onToggleTheme() })
         }
 
         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
 
         NavigationDrawerItem(
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Logout,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            },
+            icon = { Icon(Icons.Default.Logout, null, Modifier.size(24.dp)) },
             label = { Text("Logout") },
             selected = false,
             onClick = onLogout,
